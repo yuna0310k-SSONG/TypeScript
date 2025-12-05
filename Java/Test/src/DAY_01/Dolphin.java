@@ -1,3 +1,5 @@
+package DAY_01;
+
 public class Dolphin  extends Animal{
 ;
     public Dolphin(String name, int age) {

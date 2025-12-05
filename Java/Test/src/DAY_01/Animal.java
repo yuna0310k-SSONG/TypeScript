@@ -1,3 +1,5 @@
+package DAY_01;
+
 public class Animal {
     protected String name;
     protected int age;

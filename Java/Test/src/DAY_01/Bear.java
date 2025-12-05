@@ -1,3 +1,5 @@
+package DAY_01;
+
 public class Bear extends Animal{
     private String location;
     public Bear(String name, int age, String location) {

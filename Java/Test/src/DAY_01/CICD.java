@@ -1,3 +1,5 @@
+package DAY_01;
+
 public class CICD {
     public static void main(String[] args) {
         Bear pooh = new Bear("푸",40,"캐내다");
