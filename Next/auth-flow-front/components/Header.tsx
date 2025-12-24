@@ -1,0 +1,56 @@
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { useAuthStore } from "@/store/auth";
+
+export default function Header() {
+  const user = useAuthStore((state) => state.user);
+  const isInit = useAuthStore((state) => state.isInit);
+
+  if (!isInit) return null;
+
+  return (
+    <header className="top-0 left-0 right-0 z-50 h-14 border-b bg-white flex items-center justify-between px-4">
+      {/* 로고 */}
+      <Link href="/" className="font-bold text-lg tracking-tight">
+        Instagram
+      </Link>
+
+      {/* 우측 영역 */}
+      {user ? (
+        // 🔐 로그인 상태
+        <div className="flex items-center gap-6">
+          {/* ✅ 추가된 한 줄 */}
+          <span className="text-sm text-gray-700">
+            <strong>{user.nickname}</strong>님 어서오세요!
+          </span>
+
+          <Link href="/profile/edit">
+            <Image
+              src={user.avatar_url || "/default-avatar.png"}
+              alt="avatar"
+              width={28}
+              height={28}
+              className="rounded-full"
+              priority
+            />
+          </Link>
+        </div>
+      ) : (
+        // 🔓 비로그인 상태
+        <div className="flex items-center gap-10 text-sm">
+          <Link href="/login" className="text-gray-700">
+            Log in
+          </Link>
+          <Link
+            href="/signup"
+            className="font-semibold text-black border px-3 py-1 rounded"
+          >
+            Sign up
+          </Link>
+        </div>
+      )}
+    </header>
+  );
+}
