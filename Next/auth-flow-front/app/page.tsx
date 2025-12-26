@@ -1,9 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import Image from "next/image";
 import { useAuthStore } from "@/store/auth";
-import Stories from "@/components/Stories";
-import Feed from "@/components/Feed";
 
 export default function HomePage() {
   const user = useAuthStore((s) => s.user);
@@ -21,14 +19,23 @@ export default function HomePage() {
   if (!user) {
     return (
       <section className="min-h-[70vh] flex flex-col items-center justify-center gap-4">
-        <h1 className="text-4xl font-bold mb-6">Instagram</h1>
+        <div className="mb-6 flex justify-center">
+          <Image
+            src="/main_img.png"
+            alt="Main Image"
+            width={600}
+            height={600}
+            priority
+            className="w-full h-full object-cover"
+          />
+        </div>
       </section>
     );
   }
 
   // 🔐 로그인 후 (임시)
   return (
-    <section className="w-full max-w-md mx-auto py-6 space-y-6">
+    <section className=" py-6 space-y-6">
       {/* <Stories />
       <Feed /> */}
     </section>

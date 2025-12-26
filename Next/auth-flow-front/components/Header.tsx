@@ -11,7 +11,7 @@ export default function Header() {
   if (!isInit) return null;
 
   return (
-    <header className="top-0 left-0 right-0 z-50 h-14 border-b bg-white flex items-center justify-between px-4">
+    <header className="w-full max-w-[1200px] mx-auto top-0 left-0 right-0 z-50 h-14 border-b bg-white flex items-center justify-between px-4">
       {/* 로고 */}
       <Link href="/" className="font-bold text-lg tracking-tight">
         Instagram
@@ -27,19 +27,21 @@ export default function Header() {
           </span>
 
           <Link href="/profile/edit">
-            <Image
-              src={user.avatar_url || "/default-avatar.png"}
-              alt="avatar"
-              width={28}
-              height={28}
-              className="rounded-full"
-              priority
-            />
+            <div className="w-7 h-7 rounded-full overflow-hidden shrink-0">
+              <Image
+                src={user.avatar_url || "/default-avatar.png"}
+                alt="avatar"
+                width={32}
+                height={32}
+                className="w-full h-full object-cover"
+                priority
+              />
+            </div>
           </Link>
         </div>
       ) : (
         // 🔓 비로그인 상태
-        <div className="flex items-center gap-10 text-sm">
+        <div className="flex items-center gap-5 text-sm">
           <Link href="/login" className="text-gray-700">
             Log in
           </Link>

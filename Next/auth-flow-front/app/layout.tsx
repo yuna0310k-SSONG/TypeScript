@@ -9,15 +9,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="min-h-screen bg-gray-50">
+      <body className="bg-gray-50">
         <Providers>
           {/* Header */}
           <Header />
 
-          {/* 🔥 Header 높이만큼 padding-top */}
-          <main className="pt-[56px] flex flex-col items-center justify-center min-h-screen">
-            {children}
-          </main>
+          <main className="flex flex-col items-center ">{children}</main>
         </Providers>
       </body>
     </html>

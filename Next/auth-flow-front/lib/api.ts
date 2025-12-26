@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "@/store/auth";
 
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "https://auth-flow.fly.dev",
   withCredentials: true, // 🔥 refresh 쿠키 필수
 });
 
@@ -15,16 +15,14 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-let refreshing: Promise<string> | null = null;
-
 // 응답 인터셉터: 401 → refresh → 재요청
 api.interceptors.response.use(
   (res) => res,
   async (error) => {
-    const original = error.config as any;
+    const original = error.config;
 
     // 🔥 refresh 요청 자체는 가로채지 않는다
-    if (original?.url === "/auth/refresh") {
+    if (original.url === "/auth/refresh") {
       return Promise.reject(error);
     }
 
@@ -32,16 +30,9 @@ api.interceptors.response.use(
       original._retry = true;
 
       try {
-        if (!refreshing) {
-          refreshing = api
-            .post("/auth/refresh")
-            .then((r) => r.data.accessToken as string)
-            .finally(() => {
-              refreshing = null;
-            });
-        }
+        const res = await api.post("/auth/refresh");
+        const newToken = res.data.accessToken;
 
-        const newToken = await refreshing;
         useAuthStore.getState().setAccessToken(newToken);
         original.headers.Authorization = `Bearer ${newToken}`;
         return api(original);

@@ -33,6 +33,13 @@ export const updateProfile = async (data: {
   return res.data as User;
 };
 
+export const changePassword = async (data: {
+  currentPassword: string;
+  newPassword: string;
+}) => {
+  await api.patch("/auth/password", data);
+};
+
 export const logout = async () => {
   await api.post("/auth/logout");
 };
